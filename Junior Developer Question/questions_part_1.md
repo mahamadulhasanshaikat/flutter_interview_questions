@@ -240,3 +240,90 @@ pubspec.yaml হলো ফ্ল্যাটার প্রজেক্টে�
 প্রজেক্টের নাম, ভার্সন ও ডেসক্রিপশন নির্ধারণ করতে।
 থার্ড-পার্টি লাইব্রেরি বা প্যাকেজ অ্যাড ও ম্যানেজ করতে।
 প্রজেক্টের জন্য ইমেজ, আইকন ও কাস্টম ফন্ট ডিক্লেয়ার বা লিংক করতে।
+
+
+5. How does Flutter optimize list rendering with ListView.builder compared to a simple Column?
+✅ English Answer
+Column / ListView(children: []): Renders and instantiates all children simultaneously into memory upon layout, regardless of whether they are visible on screen. This can cause high memory usage and dropped frames when displaying large lists.
+
+ListView.builder: Employs viewport-based lazy loading. It only instantiates, lays out, and paints items currently visible within the scroll viewport plus a small cache extent. As items scroll off-screen, their resources are reclaimed or recycled.
+
+✅ বাংলায় Answer
+Column বা ListView(children: []): লিস্টে যতগুলো আইটেম থাকে, তাদের সবগুলোকে স্ক্রিনে আসার আগেই একসাথে মেমরিতে রেন্ডার করে। ফলে ডেটা বেশি হলে মেমরি বেড়ে গিয়ে অ্যাপ হ্যাং বা ক্র্যাশ করতে পারে।
+
+ListView.builder: এটি অলসভাবে (Lazy Loading) কাজ করে। ব্যবহারকারী স্ক্রিনে স্ক্রল করে যতটুকু অংশ দেখছেন, ঠিক ততটুকু অংশই মেমরিতে তৈরি ও রেন্ডার করে। আইটেম স্ক্রিনের বাইরে চলে গেলে তা রিসাইকেল করে মেমরি মুক্ত রাখে।
+
+36. What is the RepaintBoundary widget and how does it prevent frame drops?
+✅ English Answer
+RepaintBoundary isolates a specific subtree of widgets into a separate display list on the GPU:
+
+Normally, if one widget repaints, its entire ancestor or sibling branch might be forced to repaint.
+
+Wrapping a frequently changing widget (such as an animation, video player, or continuous progress bar) inside a RepaintBoundary prevents paint propagation, ensuring only the isolated subtree is repainted without affecting static surrounding layouts.
+
+✅ বাংলায় Answer
+RepaintBoundary উইজেট ট্রির কোনো নির্দিষ্ট অংশকে গ্রাফিক্স মেমরিতে আলাদা একটি লেয়ারে আইসোলেট বা বিভক্ত করে রাখে:
+
+সাধারণত স্ক্রিনের একটি ছোট উইজেট ড্র (Repaint) হলে তার আশেপাশের প্যারেন্ট বা চাইল্ড উইজেটগুলোও অপ্রয়োজনীয়ভাবে ড্র হতে পারে।
+
+বারবার অ্যানিমেট হওয়া কোনো উইজেটের চারপাশে RepaintBoundary ব্যবহার করলে পেইন্টিং সীমাবদ্ধ থাকে, যার ফলে স্থির অংশগুলো বারবার রেন্ডার না হয়ে অ্যাপের ৬০/১২০ FPS স্মুথ থাকে।
+
+37. What is Dependency Injection (DI) and how is it handled in Flutter?
+✅ English Answer
+Dependency Injection (DI) is a software design pattern where classes receive their dependencies from an external source rather than instantiating them internally:
+
+Service Locator (get_it): Acts as a global registry where dependencies (e.g., API clients, database repositories) are registered as singletons, factories, or lazy singletons and retrieved on demand without relying on BuildContext.
+
+Inherited-based DI (Provider / Riverpod): Injects dependencies scoped to the widget tree lifecycle, naturally coupling teardown to widget removal.
+
+✅ বাংলায় Answer
+Dependency Injection (DI) হলো এমন একটি প্যাটার্ন যেখানে কোনো ক্লাসের ভেতরে অন্য অবজেক্ট তৈরি না করে বাইরে থেকে তা সরবরাহ করা হয়:
+
+Service Locator (get_it): একটি সেন্ট্রাল রেজিস্ট্রি হিসেবে কাজ করে, যেখান থেকে পুরো অ্যাপের যেকোনো জায়গা থেকে API সার্ভিস বা ডাটাবেজ রিপোজিটরি সরাসরি কল করা যায় (কোনো BuildContext লাগে না)।
+
+Tree-scoped DI (Provider/Riverpod): উইজেট ট্রির মাধ্যমে ডিপেন্ডেন্সি ইনজেক্ট করে, যাতে কোনো স্ক্রিন বন্ধ হলে তার সাথে সম্পর্কিত ডেটাও স্বয়ংক্রিয়ভাবে মেমরি থেকে মুছে যায়।
+
+38. How does Flutter manage responsive UI across different screen sizes and orientations?
+✅ English Answer
+MediaQuery: Retrieves runtime screen dimensions, pixel density, orientation, and safe area paddings.
+
+LayoutBuilder: Provides parent layout constraints (boxConstraints.maxWidth), allowing conditional rendering based on parent widget bounds rather than total device screen size.
+
+Flexibility Widgets: Using Expanded, Flexible, FittedBox, and Wrap allows elements to scale, stretch, or flow into multi-line layouts gracefully.
+
+✅ বাংলায় Answer
+MediaQuery: ডিভাইসের মোট স্ক্রিন সাইজ, হাইট, উইডথ এবং ওরিয়েন্টেশন (পোর্ট্রেট/ল্যান্ডস্কেপ) জানতে ব্যবহৃত হয়।
+
+LayoutBuilder: নির্দিষ্ট উইজেটের প্যারেন্ট সাইজ (বক্স কনস্ট্রেইন্ট) পরিমাপ করে সে অনুযায়ী বড় স্ক্রিনে গ্রিড বা ছোট স্ক্রিনে কলাম দেখানোর সিদ্ধান্ত নিতে ব্যবহৃত হয়।
+
+ফ্লেক্সিবল উইজেটস: Expanded, Flexible, FittedBox, এবং Wrap ব্যবহার করে রেসপনসিভ ও অভিযোজনযোগ্য লেআউট তৈরি করা হয়।
+
+39. What are Keys inside AnimatedList and ReorderableListView?
+✅ English Answer
+In dynamic lists where items can be reordered, inserted, or dismissed, Flutter matches widgets to elements by type. If every item has the same widget type without an explicit identity, Flutter cannot track which item shifted, leading to incorrect visual state animations or corrupted checkmarks/inputs.
+
+Providing a persistent ValueKey(item.id) to each item guarantees that the framework tracks the exact element state through layout recalculations and transitions.
+
+✅ বাংলায় Answer
+লিস্টের আইটেম যখন ড্র্যাগ করে সরানো হয় (Reorderable) অথবা অ্যানিমেশন দিয়ে রিমুভ করা হয়, তখন Flutter উইজেটের টাইপ দেখে সিদ্ধান্ত নেয়। যদি প্রতিটি রো দেখতে একই রকম হয় তবে ফ্রেমওয়ার্ক কনফিউজড হয়ে ভুল আইটেমের স্টেট আপডেট করে ফেলতে পারে।
+
+প্রতিটি রোতে ইউনিক ValueKey(item.id) দিলে Flutter সঠিকভাবে বুঝতে পারে কোন আইটেমটি স্থানান্তরিত বা ডিলিট হচ্ছে, যার ফলে সঠিক অ্যানিমেশন এবং স্টেট অক্ষুণ্ণ থাকে।
+
+40. What are the best practices for reducing app size in production?
+✅ English Answer
+App Bundles: Build Android App Bundles (flutter build appbundle) instead of fat APKs so Google Play delivers device-tailored APKs.
+
+Resource Optimization: Compress images, convert assets to modern formats like WebP or vector SVGs, and avoid uncompressed audio files.
+
+Font Subsetting: Remove unused font weights and glyphs, or fetch fonts dynamically via google_fonts.
+
+ProGuard & R8: Enable code shrinking and resource minification in android/app/build.gradle.
+
+Tree Shaking & Obfuscation: Flutter automatically tree-shakes unused icons (e.g., --shrink-resources). Use --obfuscate --split-debug-info to strip debug symbols into separate mapping files.
+
+✅ বাংলায় Answer
+১. App Bundle: বড় সাইজের universal APK না বানিয়ে flutter build appbundle ব্যবহার করা, যাতে প্লে-স্টোর প্রতিটি ফোনের জন্য আলাদা ছোট APK দেয়।
+২. ছবি ও অ্যাসেট অপ্টিমাইজেশন: ভারী PNG/JPG-এর বদলে WebP বা SVG ব্যবহার করা এবং ছবি কম্প্রেস করে রাখা।
+৩. ফন্ট ম্যানেজমেন্ট: অপ্রয়োজনীয় ফন্ট ডিক্লেয়ার না করা এবং ফন্ট প্যাকেজ অপ্টিমাইজ করা।
+৪. R8 ও Minification: অ্যান্ড্রয়েডে ProGuard বা R8 অন করে অব্যবহৃত লাইব্রেরি কোড ছাঁটাই করা।
+৫. কোড ও আইকন ট্রি-শেকিং: --split-debug-info ব্যবহার করে অ্যাপ সাইজ কমানো এবং রিলিজ বিল্ডে মেমরি অপ্টিমাইজেশন বজায় রাখা।

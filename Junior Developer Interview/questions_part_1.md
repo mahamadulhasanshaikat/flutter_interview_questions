@@ -22,7 +22,7 @@ Why do you choose Flutter for mobile app development?
 ✅ English Answer
 I choose Flutter because it allows me to build cross-platform applications using a single codebase. It provides a rich widget system, fast development with hot reload, good performance, and makes it easier to maintain UI consistently across platforms.
 
-✅ বাংলায় Answer
+✅ বাংলায় Answer\n
 আমি Flutter ব্যবহার করি কারণ একটা codebase দিয়েই Android এবং iOS-এর জন্য application তৈরি করা যায়।
 
 এছাড়া Hot Reload-এর কারণে code পরিবর্তন করার পর খুব দ্রুত result দেখা যায়। Flutter-এর widget system-এর কারণে UI তৈরি এবং maintain করাও সহজ।

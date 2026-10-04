@@ -15,12 +15,12 @@ Dart-এর মধ্যে OOP, asynchronous programming, null safety এবং
 ---
 
 ## 2. What is the difference between final and const in Dart?
-✅ English Answer
+### ✅ English Answer
 final: A runtime constant. Its value can be determined when code executes (e.g., final now = DateTime.now();), but once assigned, it cannot be changed.
 
 const: A compile-time constant. Its value must be known before compiling the code and is deeply immutable (e.g., const pi = 3.1416;).
 
-✅ বাংলায় Answer
+### ✅ বাংলায় Answer
 final: রানটাইম কনস্ট্যান্ট। কোড চালু হওয়ার পর এর মান নির্ধারণ হতে পারে (যেমন API রেসপন্স বা বর্তমান সময়)। একবার মান পেলে তা আর পরিবর্তন করা যায় না।
 
 const: কম্পাইল-টাইম কনস্ট্যান্ট। কোড রান করার আগেই এর নির্দিষ্ট মান জানা থাকতে হয় এবং এটি কোনোভাবেই পরিবর্তনযোগ্য নয়।
